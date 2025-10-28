@@ -22,12 +22,12 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # ✅ Official Playwright setup (installs browsers & deps)
+      # ✅ Add this step to install browsers
       - name: Install Playwright Browsers
-        uses: microsoft/playwright-github-action@v1
+        run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: npx playwright test --reporter=html
+        run: npx playwright test --reporter=dot
 
       # ✅ Upload HTML test report as artifact
       - name: Upload Playwright Report
