@@ -22,8 +22,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      # ✅ Correct way to install Playwright and browsers on GitHub Actions
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium --with-deps
+
+      # ✅ Optional (confirm browsers are installed)
+      - name: Verify Playwright Browsers
+        run: npx playwright --version
 
       - name: Run Playwright Tests
         run: npx playwright test --reporter=dot
