@@ -5,6 +5,16 @@ exports.HomePage = class HomePage {
   }
 
   async verifyLogin() {
-    await this.inventoryList.isVisible();
+    await this.inventoryList.waitFor({ state: 'visible' });
+  }
+
+  // ✅ Add specific products by name
+  async addSpecificProducts(productNames) {
+    for (const name of productNames) {
+      const addBtn = this.page.locator(
+        `xpath=//div[text()="${name}"]/ancestor::div[@class="inventory_item"]//button`
+      );
+      await addBtn.click();
+    }
   }
 };
