@@ -10,40 +10,41 @@ test('User can add product to cart, checkout, and logout successfully', async ({
   const cartPage = new CartPage(page);
   const checkoutPage = new CheckoutPage(page);
 
-  // Step 1: Login
+  // Login
   await loginPage.goto();
   await loginPage.login('standard_user', 'secret_sauce');
   await homePage.verifyLogin();
 
-  await page.pause();
-  // Step 2: Add item to cart
+//   await page.pause();
+  // Add to cart
   await homePage.addSpecificProducts([
   'Sauce Labs Backpack',
-  'Sauce Labs Bolt T-Shirt'
+  'Sauce Labs Bolt T-Shirt',
+  'Sauce Labs Bike Light',
+  'Sauce Labs Onesie'
 ]);
 
-
-// Step 3: Open cart
+// Open cart
 await cartPage.openCart();
-await expect(page.locator('.cart_item')).toHaveCount(2);
+await expect(page.locator('.cart_item')).toHaveCount(4);
 
-  // Step 4: Checkout
+  // Checkout
   await cartPage.proceedToCheckout();
 
-  // Step 5: Fill info and continue
+  // Fill info
   await checkoutPage.fillCheckoutInfo('Hobaib', 'Shah', '25000');
 
-  // Step 6: Finish checkout
+  // checkout
   await checkoutPage.finishOrder();
 
-  // Step 7: Verify success message
+  // Verify success message
   await checkoutPage.verifyOrderSuccess();
   await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
 
-  // Step 8: Go back home and logout
+  // Go back home and logout
   await checkoutPage.goBackHome();
   await checkoutPage.logout();
 
-  // Step 9: Verify logout
+  // Verify logout
   await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
